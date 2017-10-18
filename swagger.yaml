@@ -1,0 +1,200 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: ""
+# during dev, should point to your local machine
+host: ffy-api.herokuapp.com
+# basePath prefixes all resource paths 
+basePath: /
+# 
+tags:
+  - name: "FF7"
+    description: "Final Fantasy 7"
+  - name: "FF8"
+    description: "Final Fantasy 8"    
+schemes:
+  # tip: remove http to make production-grade
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /ff7/characters:
+    x-swagger-router-controller: ff7
+    get:
+      tags:
+        - "FF7"
+      description: Returns all 'Final Fantasy 7' Characters
+      operationId: getFF7Characters
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Character"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /ff7/characters/{id}:
+    x-swagger-router-controller: ff7
+    parameters:
+      - name: id
+        in: path
+        description: The Id of the Character to get
+        type: integer
+        required: true
+    get:
+      tags:
+          - "FF7"
+      description: Returns 'Final Fantasy 7' Character based on Id
+      operationId: getFF7CharacterById
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Character"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /ff7/weapons:
+    x-swagger-router-controller: ff7
+    parameters:
+      - name: characterId
+        in: query
+        description: The CharacterId of the Weapons to get
+        type: integer
+        required: false    
+    get:
+      tags:
+          - "FF7"    
+      description: Returns all 'Final Fantasy 7' Weapons
+      operationId: getFF7Weapons
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Weapon"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"            
+  /ff7/weapons/{id}:
+    x-swagger-router-controller: ff7
+    parameters:
+      - name: id
+        in: path
+        description: The Id of the Weapon to get
+        type: integer
+        required: true
+    get:
+      tags:
+          - "FF7"    
+      description: Returns 'Final Fantasy 7' Weapon based on Id
+      operationId: getFF7WeaponById
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Weapon"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"                          
+  /swagger:
+    x-swagger-pipe: swagger_raw
+  /ff8/characters:
+    x-swagger-router-controller: ff8
+    get:
+      tags:
+        - "FF8"
+      description: Returns all 'Final Fantasy 8' Characters
+      operationId: getFF8Characters
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Character"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /ff8/characters/{id}:
+    x-swagger-router-controller: ff8
+    parameters:
+      - name: id
+        in: path
+        description: The Id of the Character to get
+        type: integer
+        required: true
+    get:
+      tags:
+          - "FF8"
+      description: Returns 'Final Fantasy 8' Character based on Id
+      operationId: getFF8CharacterById
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Character"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"    
+# complex objects have schema definitions
+definitions:
+  Character:
+    required:
+      - id
+      - firstname
+      - lastname
+    properties:
+      id:
+        type: integer
+        example: 1
+      firstname:
+        type: string
+        example: "Cloud"
+      lastname:
+        type: string
+        example: "Strife"
+  Weapon:
+    required:
+      - id
+      - characterId
+      - name
+      - slots
+      - attack
+      - attackPercentage
+      - growthId
+    properties:
+      id:
+        type: integer
+        example: 1
+      characterId:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: "Buster Sword"
+      slots:
+        type: string
+        example: "O=O"
+      attack:
+        type: integer
+        example: 18
+      attackPercentage:
+        type: integer
+        example: 96
+      growthId:
+        type: integer
+        example: 2
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
