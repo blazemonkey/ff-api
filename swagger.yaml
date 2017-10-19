@@ -3,8 +3,8 @@ info:
   version: "0.0.1"
   title: ""
 # during dev, should point to your local machine
-host: ffy-api.herokuapp.com
-#host: localhost:10010
+#host: ffy-api.herokuapp.com
+host: localhost:10010
 # basePath prefixes all resource paths 
 basePath: /
 # 
@@ -102,6 +102,22 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /ff7/growth-types:
+    x-swagger-router-controller: ff7
+    get:
+      tags:
+        - "FF7"
+      description: Returns all 'Final Fantasy 7' Growth Types
+      operationId: getFF7GrowthTypes
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Lookup"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"            
   /ff7/limit-breaks:
     x-swagger-router-controller: ff7
     parameters:
@@ -232,6 +248,17 @@ paths:
             $ref: "#/definitions/ErrorResponse"    
 # complex objects have schema definitions
 definitions:
+  Lookup:
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: integer
+        example: 4
+      name:
+        type: string
+        example: "Triple"
   Character:
     required:
       - id
@@ -278,7 +305,7 @@ definitions:
       - slots
       - attack
       - attackPercentage
-      - growthId
+      - growthTypeId
     properties:
       id:
         type: integer
@@ -298,7 +325,7 @@ definitions:
       attackPercentage:
         type: integer
         example: 96
-      growthId:
+      growthTypeId:
         type: integer
         example: 2
   ErrorResponse:
