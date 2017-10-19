@@ -9,6 +9,8 @@ host: ffy-api.herokuapp.com
 basePath: /
 # 
 tags:
+  - name: "FF6"
+    description: "Final Fantasy 6"
   - name: "FF7"
     description: "Final Fantasy 7"
   - name: "FF8"
@@ -24,6 +26,44 @@ consumes:
 produces:
   - application/json
 paths:
+  /ff6/characters:
+    x-swagger-router-controller: ff6
+    get:
+      tags:
+        - "FF6"
+      description: Returns all 'Final Fantasy 6' Characters
+      operationId: getFF6Characters
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Character"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /ff6/characters/{id}:
+    x-swagger-router-controller: ff6
+    parameters:
+      - name: id
+        in: path
+        description: The Id of the Character to get
+        type: integer
+        required: true
+    get:
+      tags:
+          - "FF6"
+      description: Returns an 'Final Fantasy 6' Character based on Id
+      operationId: getFF6CharacterById
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Character"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /ff7/characters:
     x-swagger-router-controller: ff7
     get:
@@ -62,7 +102,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /ff7/limitBreaks:
+  /ff7/limit-breaks:
     x-swagger-router-controller: ff7
     parameters:
       - name: characterId
@@ -84,7 +124,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /ff7/limitBreaks/{id}:
+  /ff7/limit-breaks/{id}:
     x-swagger-router-controller: ff7
     parameters:
       - name: id
