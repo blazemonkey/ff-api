@@ -434,6 +434,11 @@
   color: #999
 }
 
+.swagger-ui .response-col_description
+{
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
 .swagger-ui .response-col_description__inner {
   font-size: 12px;
   font-style: italic;
