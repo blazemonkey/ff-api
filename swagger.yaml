@@ -135,7 +135,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/LimitBreak"
+            $ref: "#/definitions/FF7LimitBreak"
         default:
           description: Error
           schema:
@@ -157,11 +157,71 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/LimitBreak"
+            $ref: "#/definitions/FF7LimitBreak"
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"                    
+  /ff7/materia:
+    x-swagger-router-controller: ff7
+    parameters:
+      - name: materiaTypeId
+        in: query
+        description: The MateriaTypeId of the Materia to get
+        type: integer
+        required: false    
+    get:
+      tags:
+          - "FF7"    
+      description: Returns all 'Final Fantasy 7' Materia
+      operationId: getFF7Materia
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/FF7Materia"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /ff7/materia/{id}:
+    x-swagger-router-controller: ff7
+    parameters:
+      - name: id
+        in: path
+        description: The Id of the Materia to get
+        type: integer
+        required: true
+    get:
+      tags:
+          - "FF7"    
+      description: Returns an 'Final Fantasy 7' Materia based on Id
+      operationId: getFF7MateriaById
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/FF7Materia"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"                                
+  /ff7/materia-types:
+    x-swagger-router-controller: ff7
+    get:
+      tags:
+        - "FF7"
+      description: Returns all 'Final Fantasy 7' Materia Types
+      operationId: getFF7MateriaTypes
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Lookup"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"                                    
   /ff7/weapons:
     x-swagger-router-controller: ff7
     parameters:
@@ -179,7 +239,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/Weapon"
+            $ref: "#/definitions/FF7Weapon"
         default:
           description: Error
           schema:
@@ -201,13 +261,11 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/Weapon"
+            $ref: "#/definitions/FF7Weapon"
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"                          
-  /swagger:
-    x-swagger-pipe: swagger_raw
   /ff8/characters:
     x-swagger-router-controller: ff8
     get:
@@ -246,6 +304,8 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"    
+  /swagger:
+    x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
   Lookup:
@@ -274,7 +334,7 @@ definitions:
       lastname:
         type: string
         example: "Strife"
-  LimitBreak:
+  FF7LimitBreak:
     required:
       - id
       - characterId
@@ -296,8 +356,63 @@ definitions:
         example: 1
       subLevel:
         type: integer
-        example: 1    
-  Weapon:
+        example: 1            
+  FF7Materia:
+    required:
+      - id
+      - materiaTypeId
+      - name
+      - description
+      - sellMastered
+      - hpPercentage
+      - mpPercentage
+      - strength
+      - magic
+      - vitality
+      - spirit
+      - dexterity
+      - luck
+    properties:
+      id:
+        type: integer
+        example: 1      
+      materiaTypeId:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: "Cure"
+      description:
+        type: string
+        example: "Equips 'Restore' Magic'" 
+      sellMastered:
+        type: integer
+        example: 21000
+      hpPercentage:
+        type: integer
+        example: -2
+      mpPercentage:
+        type: integer
+        example: 2
+      strength:
+        type: integer
+        example: -1
+      magic:
+        type: integer
+        example: 1            
+      vitality:
+        type: integer
+        example: 0
+      spirit:
+        type: integer
+        example: 0
+      dexterity:
+        type: integer
+        example: 0
+      luck:
+        type: integer
+        example: 0            
+  FF7Weapon:
     required:
       - id
       - characterId
