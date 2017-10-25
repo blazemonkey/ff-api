@@ -64,6 +64,44 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /ff7/armors:
+    x-swagger-router-controller: ff7
+    get:
+      tags:
+          - "FF7"    
+      description: Returns all 'Final Fantasy 7' Armors
+      operationId: getFF7Armors
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/FF7Armor"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /ff7/armors/{id}:
+    x-swagger-router-controller: ff7
+    parameters:
+      - name: id
+        in: path
+        description: The Id of the Armor to get
+        type: integer
+        required: true
+    get:
+      tags:
+          - "FF7"    
+      description: Returns an 'Final Fantasy 7' Armor based on Id
+      operationId: getFF7ArmorById
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/FF7Armor"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"                                      
   /ff7/characters:
     x-swagger-router-controller: ff7
     get:
@@ -334,6 +372,44 @@ definitions:
       lastname:
         type: string
         example: "Strife"
+  FF7Armor:
+    required:
+      - id
+      - name
+      - slots
+      - defense
+      - defensePercentage
+      - magicDefense
+      - magicDefensePercentage      
+      - growthTypeId
+    properties:
+      id:
+        type: integer
+        example: 1
+      characterId:
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: "Carbon Bangle"
+      slots:
+        type: string
+        example: "O=O O"
+      defense:
+        type: integer
+        example: 27
+      defensePercentage:
+        type: integer
+        example: 3
+      magicDefense:
+        type: integer
+        example: 14
+      magicDefensePercentage:
+        type: integer
+        example: 0        
+      growthTypeId:
+        type: integer
+        example: 2        
   FF7LimitBreak:
     required:
       - id
