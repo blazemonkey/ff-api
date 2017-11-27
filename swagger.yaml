@@ -140,6 +140,44 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /ff7/enemies:
+    x-swagger-router-controller: ff7
+    get:
+      tags:
+        - "FF7"
+      description: Returns all 'Final Fantasy 7' Enemies
+      operationId: getFF7Enemies
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/FF7Enemy"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /ff7/enemies/{id}:
+    x-swagger-router-controller: ff7
+    parameters:
+      - name: id
+        in: path
+        description: The Id of the Enemy to get
+        type: integer
+        required: true
+    get:
+      tags:
+          - "FF7"
+      description: Returns an 'Final Fantasy 7' Enemy based on Id
+      operationId: getFF7EnemyById
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/FF7Enemy"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"            
   /ff7/growth-types:
     x-swagger-router-controller: ff7
     get:
@@ -409,7 +447,18 @@ definitions:
         example: 0        
       growthTypeId:
         type: integer
-        example: 2        
+        example: 2
+  FF7Enemy:
+    required:
+      - id
+      - name
+    properties:
+      id: 
+        type: integer
+        example: 1
+      name:
+        type: string
+        example: "1st Ray"
   FF7LimitBreak:
     required:
       - id
@@ -487,7 +536,7 @@ definitions:
         example: 0
       luck:
         type: integer
-        example: 0            
+        example: 0
   FF7Weapon:
     required:
       - id
@@ -497,6 +546,9 @@ definitions:
       - attack
       - attackPercentage
       - growthTypeId
+      - magic
+      - initial
+      - specialBonus
     properties:
       id:
         type: integer
@@ -519,6 +571,17 @@ definitions:
       growthTypeId:
         type: integer
         example: 2
+      magic:
+        type: integer
+        example: 2
+      initial:
+        type: boolean
+        example: true      
+      specialBonus:
+        type: array
+        items:
+          type: string
+          example: ""
   ErrorResponse:
     required:
       - message
